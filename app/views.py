@@ -4,11 +4,11 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
+from flask_wtf import FlaskForm
 from app import app, mail
 from flask import render_template, request, redirect, url_for, flash
 from flask_mail import Message
-from forms import MyForm
+from forms import ContactForm
 
 
 ###
@@ -27,17 +27,17 @@ def about():
     return render_template('about.html', name="Mary Jane")
     
     
-@app.route('/contact', methods=['GET', 'POST'])
+@app.route('/contact', methods=['GET','POST'])
 def contact():
-    form = MyForm()
+    form = ContactForm()
     if request.method == 'POST':
         if form.validate_on_submit():
             msg = Message(request.form['subject'], sender=(request.form['name'], request.form['email']), recipients=['to@example.com'])
             msg.body = request.form['message']
             mail.send(msg)
-            flash('Email successfully sent!', 'success')
+            flash('Your email has been successfully sent!', 'success')
             return redirect(url_for('home'))
-	return render_template('contact.html', form=form)
+    return render_template('contact.html', form=form)
 
 ###
 # The functions below should be applicable to all Flask apps.

@@ -7,34 +7,53 @@
 
 <hr>
 
-<p>Fill in this form to contact the site owners.</p>
+<p>Fill in this form to contact the site owners.</p><br>
 
 <form method="POST" action="{{url_for('contact')}}">
-{{ form.csrf_token }
+{{ form.csrf_token }}
 
-    <h3>{{ form.name.label }}</h3> <em class = "red">(Required)</em><br>
-    <p>Please enter your full name:</p> <br>
-    {{ form.name }} 
+    <p class ="label">{{ form.name.label }}</p> <strong>(Required)</strong><br>
+    <p>Please enter your full name:</p>
+    {{ form.name }}
     
+    <ul>
+    {% for error in form.name.errors %}
+        <li class="error-messages" style="color:red;">{{ error }}</li>
+    {% endfor %}
+    </ul>
     <br>
     
-    <h3>{{ form.email.label }}</h3> <em class = "red">(Required)</em><br>
-    <p>Please enter your e-mail address:</p> <br>
+    <p class ="label">{{ form.email.label }}</p> <strong>(Required)</strong><br>
+    <p>Please enter your e-mail address:</p>
     {{ form.email(placeholder='yourname@email.com') }}
     
+    <ul>
+    {% for error in form.email.errors %}
+        <li class="error-messages" style="color:red;">{{ error }}</li>
+    {% endfor %}
+    </ul>
     <br>
     
-    <h3>{{ form.subject.label }}</h3> <em class = "red">(Required)</em><br>
-    <p>Please enter the subject for your message:</p> <br>
-    {{ form.subject(rows="8") }}
+    <p class ="label">{{ form.subject.label }}</p> <strong>(Required)</strong><br>
+    <p>Please enter the subject for your message:</p>
+    {{ form.subject }}
     
+    <ul>
+    {% for error in form.subject.errors %}
+        <li class="error-messages" style="color:red;">{{ error }}</li>
+    {% endfor %}
+    </ul>
     <br>
+
+    <p class ="label">{{ form.message.label }}</p> <strong>(Required)</strong><br>
+    <p>Please enter the message you would like to send:</p>
+    {{form.message}}
     
-    <h3>{{ form.message.label }}</h3> <em class = "red">(Required)</em><br>
-    <p>Please enter the message you would like to send:</p> <br>
-    {{form.message(size=40,class="form-control")}}
-    
-    <br>
+    <ul>
+    {% for error in form.message.errors %}
+        <li class="error-messages" style="color:red;">{{ error }}</li>
+    {% endfor %}
+    </ul>
     
     <button type="submit">Send</button>
     
